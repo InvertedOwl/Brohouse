@@ -7,6 +7,9 @@ let attemptToJoin;
 let roomJoined;
 let pagescroll = 0;
 
+Notification.requestPermission().then(function (permission) {
+    console.log(permission);
+});
 
 function connect () {
     socket = io();
@@ -167,6 +170,9 @@ function connect () {
             const img = new Image()
             img.src = `data:image/png;base64,${msg.pfp}`
             addChat(msg.message, img)
+            if (!document.hasFocus()){
+                sendNoti(msg.username + " has sent a message", img.src, msg.message);
+            }
 
         } else {
             addChat(msg.message)
@@ -458,6 +464,11 @@ class Room {
         this.id = id;
     }
 }
+
+function sendNoti(title, icon, body) {
+    var notification = new Notification(title, { body, icon});
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
