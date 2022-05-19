@@ -1,0 +1,22 @@
+{
+  "name": "react-and-node-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "proxy": "http://localhost:676",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "nocache": "^3.0.3",
+    "nodemailer": "^6.7.3",
+    "require-from-url": "^3.1.3",
+    "socket.io": "^4.4.1"
+  }
+}

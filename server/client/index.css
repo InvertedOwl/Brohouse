@@ -1,0 +1,981 @@
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100vh;
+   min-height: 100%;
+   background-color: rgb(112, 112, 112);
+   font-size: 25px;
+   overflow: hidden;
+}
+
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.chatHolder{ 
+    position: relative;
+    bottom: 30px;
+}
+
+#leftcolumn {
+    width: 180px;
+    height: 100vh;
+}
+
+#centercolumn {
+    position: absolute;
+    left: 182px;
+    top: 0px;
+    width: calc(100% - calc(182px * 2));
+}
+
+@media (max-width:960px) {
+    #centercolumn {
+        position: absolute;
+        left: 58px;
+        top: 0px;
+        width: calc(100% - calc(58px ));
+    }
+}
+
+#rightcolumn {
+    position: relative;
+    top: 0px;
+    height: 100vh;
+    width: 182px;
+    left: calc(100% - calc(177px));
+}
+
+.chat {
+    width: 10px;
+    margin: 10px;
+    background-color: rgb(41, 41, 41);
+    color:  white;
+    font-size: 25px;
+}
+
+#num {
+    color: white;
+    font-size: 30;
+    width: max-content;
+    background-color: rgb(75, 75, 75);
+}
+
+.numOn {
+    color: rgb(98, 181, 98);
+}
+.numOnFull {
+    color: rgb(181, 98, 98);
+}
+
+
+
+#chatContainerConatinerr {
+    position: absolute;
+    background-color: rgb(59, 59, 59);
+    top: 0;
+    left: 0px;
+    width: calc(100% );
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 0 0 50px 50px;
+}
+
+#chatContainer {
+    position: absolute;
+    bottom: 90px;
+    width: calc(100% - calc(182px * 2));
+}
+
+#chatboxD {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#chatboxD * {
+    position: absolute;
+    bottom: -97vh;
+    left: 0px;
+    width: calc(100vw - calc(182px * 2 + 23px));
+    height: 50px;
+    border: none;
+    background-color: rgb(104, 104, 104);
+    border-radius: 15px;
+
+}
+.window {
+    display: none;
+    width: 800px;
+    height: 400px;
+    background-color: rgb(59, 59, 59);
+    border-radius: 50px;
+    box-shadow: 0px 2px 6px 2px rgb(12, 12, 12);
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    cursor: default;
+}
+
+
+/* https://www.w3schools.com/howto/howto_css_overlay.asp */
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: default; /* Add a pointer on hover */
+    background: rgba( 0, 0, 0, 0.2 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 5.5px );
+    -webkit-backdrop-filter: blur( 5.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+  }
+
+#rooms {
+    position: relative;
+    top: calc(-100vh - 30px);
+    margin-top: 30px;
+    height: calc(100vh - 80px);
+    overflow:auto
+}
+
+#createRoom {
+    position: relative;
+    margin-bottom: 15px;
+    left: 60px;
+    width: calc(150px/3);
+    height: calc(150px/3);
+    background-color: rgb(107, 107, 107);
+    box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+    border-radius: 45px;
+    color: rgb(63, 231, 63);
+    text-align: center;
+
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(126, 126, 126);
+    opacity: 1; /* Firefox */
+}
+
+.input {
+    border-radius: 35px;
+    background-color: rgb(107, 107, 107);
+    text-align: center;
+    color: rgb(180, 180, 180);
+    border-radius: 35px;
+    border: 0px;
+}
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+
+#createRoomWindow_Name {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 0%);
+
+    width: 400px;
+    height: 70px;
+    font-size: 40;
+}
+
+#createRoomWindow_Id {
+    margin: 0;
+    height: 40px;
+    width: 220px;
+    position: absolute;
+    top: 34%;
+    font-size: 23px;
+    left: 70px
+}
+
+
+
+#createRoomWindow_Locked{
+    visibility: hidden;
+    display: block;
+    height: 0;
+    width: 0;
+    position: absolute;
+    overflow: hidden;
+}
+
+#createRoomWindow_Locked_privateLabel {
+    position: absolute;
+    left: 135px;
+    top: calc(51% - 17px);
+    font-size: 23px;
+    color: rgb(199, 199, 199);
+}
+
+#base {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    left: 70px;
+    top: 51%;
+    display: inline-block;
+    background-color: rgb(107, 107, 107);
+    border-radius: 35px;
+}
+
+#createRoomWindow_Locked:checked~#notbase{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 75px;
+    top: calc(51% + 5px);
+    background-color: rgb(58, 58, 58);
+    border-radius: 35px;
+}
+
+#notbase{
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    left: 70px;
+    top: 51%;
+    background-color: rgb(107, 107, 107);
+    border-radius: 35px;
+}
+
+
+#createRoomWindow_Pass{
+    margin: 0;
+    height: 40px;
+    width: 220px;
+    position: absolute;
+    top: 68%;
+    font-size: 23px;
+    left: 70px
+}
+
+.pfp {
+    display: inline;
+    position: relative;
+    left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    top: 15px;
+}
+
+#createRoomWindow_Pass_Cancel{
+    position: absolute;
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #C75C5C;
+    border-radius: 25px;
+    bottom: 6%;
+    left: 150px;
+}
+
+#createRoomWindow_MaxPeople {
+    margin: 0;
+    height: 40px;
+    width: 70px;
+    position: absolute;
+    top: 34%;
+    font-size: 23px;
+    right: 70px;
+    text-align: left;
+}
+
+#createRoomWindow_MaxPeople_buttonup{
+    position: absolute;
+    top: 34%;
+    right: 70px;
+
+    width: 40px;
+    height: 20px;
+    background-color: rgb(145, 145, 145);
+    border-radius: 10rem 10rem 0 0;
+}
+#createRoomWindow_MaxPeople_buttondown{
+    position: absolute;
+    top: calc(34% + 20px);
+    right: 70px;
+
+    width: 40px;
+    height: 20px;
+    background-color: rgb(145, 145, 145);
+    border-radius: 0 0 10rem 10rem;
+}
+#createRoomWindow_MaxPeople_buttondown p, #createRoomWindow_MaxPeople_buttonup p{
+    position: relative;
+    bottom: 34px;
+    margin-bottom: 5px;
+    color: #464646;
+}
+
+#line {
+    top: 34%;
+    right: 70px;
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    margin-top: 20px;
+    background-color: #7a7a7a;
+}
+
+#createRoomWindow_Create{
+    position: absolute;
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #4DB85C;
+    border-radius: 25px;
+    bottom: 6%;
+    right: 150px;
+}
+
+
+
+
+
+
+
+
+.room {
+
+    position: relative;
+    margin-bottom: 15px;
+    left: 10px;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(107, 107, 107);
+    box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+    border-radius: 45px;
+}
+.roomname{
+    font-size: 25;
+    text-align: center;
+    position: relative;
+    bottom: 10px;
+    left: 0px;
+    color: rgb(197, 197, 197);
+}
+
+@media (max-width:960px) {
+    #chatboxD * {
+        position: absolute;
+        bottom: -97vh;
+        left: 0px;
+        width: calc(100vw - calc(58px));
+        height: 50px;
+        border: none;
+        background-color: rgb(104, 104, 104);
+        border-radius: 15px;
+
+    }
+}
+#logincontainer {
+    position: absolute;
+    top: calc(100% - 90px);
+    left: calc(100% - 170px);
+
+}
+
+#self {
+    position: fixed;
+    width: 170px;
+    height: 45px;
+    bottom: 10px;
+    right: inherit;
+    background-color: rgb(107, 107, 107);
+    box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+    border-radius: 100px;
+    text-align: right;
+}
+
+
+
+#selfsettings {
+    position: relative;
+    bottom: 17px;
+    left: 18px;
+    font-size: 18;
+    margin-right: 20%;
+    line-height: 45px;
+    color: rgb(197, 197, 197);
+}
+
+#imgdiv {
+    position: relative;
+    right: 126px;
+    bottom: 18px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.question {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: rgb(107, 107, 107);
+    text-align: center;
+
+}
+.questionmark {
+    position: relative;
+    bottom: 2px;
+    font-size: 20;
+    color: rgba(180, 180, 180, 0.493);
+
+}
+.questionresponsetext {
+    text-align: left;
+    font-size: 20px;
+    width: 200px;
+    height: 0;
+    background-color: rgb(107, 107, 107);
+    color: rgba(250, 235, 215, 0);
+    border-radius: 20px;
+    transition: 0.15s;
+    pointer-events: none;
+}
+.qsrtt {
+    margin: 15px;
+}
+
+.question:hover > div > .questionresponsetext {
+    height: 190px;
+    color: rgb(197, 197, 197);
+
+}
+
+
+#idquestion {
+    position: relative;
+    top: 124px;
+    left: 300px;
+}
+
+
+li {
+    display: inline;
+    word-wrap: break-word;
+    margin-left: 20px;
+    margin-bottom: 18px;
+    list-style-type: none;
+    font-size: 18;
+    color: rgb(197, 197, 197);
+}
+
+
+
+.user {
+        
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently */
+    position: relative;
+    bottom: calc(100% - 100vh);
+    left: calc(50% - calc(170px / 2));
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 170px;
+    height: 45px;
+    background-color: rgb(107, 107, 107);
+    box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+    border-radius: 100px;
+    text-align: right;
+    transition: 0.3s;
+
+}
+
+.user:hover {
+    left: calc(calc(50% - calc(170px / 2)) + 7px);
+    cursor: default;
+ }
+
+@media (max-width:960px) {
+    .user {
+        position: relative;
+        left: calc(50% - calc(170px / 2));
+        margin-top: 10px;
+        margin-bottom: 30px;
+        width: 45px;
+        height: 45px;
+        background-color: rgb(107, 107, 107);
+        box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+        border-radius: 100px;
+        text-align: right;
+    
+    }
+}
+
+.usertext {
+    position: relative;
+    font-size: 18;
+    margin-right: 10%;
+    line-height: 45px;
+    color: rgb(197, 197, 197);
+    bottom: 18px;
+    font-size: 20px;
+}
+
+@media (max-width:960px) {
+    .usertext {
+        font-size: 0px;
+        margin-right: 20%;
+        line-height: 45px;
+        color: rgb(197, 197, 197);
+    }
+}
+
+.userimgdiv {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    bottom: 20px;
+}
+
+.userimg {
+    position: relative;
+    top: -65px;
+    height: 100%;
+    width: 45px;
+    z-index: 1;
+    border-radius: 500px;
+}
+
+#usersettings {
+    width: 300px;
+    height: 450px;
+}
+
+@media (max-width:960px) {
+    .userimg {
+        position: relative;
+        top: -46px;
+        height: 100%;
+        z-index: 100;
+    }
+}
+
+#roomide{
+    width: 240px;
+    height: 50px;
+    background-color:#7a7a7a;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-radius: 0 0 20px 20px;
+}
+#roomidetext {
+    position: absolute;
+    color: rgb(199, 199, 199);
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -140%);
+    text-align: center;
+}
+#roomideid {
+    position: relative;
+    color: rgba(199, 199, 199, 0.418);
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -70%);
+    font-size: 20;
+    text-align: center;
+}
+
+#joinRoom {
+    width: 350px;
+    height: 200px;
+}
+#joinRoomText {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -25px);
+    font-size: 35px;
+}
+#joinRoomJoin{
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #4DB85C;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 10%;
+    right: 30px;
+}
+#joinRoomCancel{
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #C75C5C;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 10%;
+    left: 30px;
+}
+
+#joinRoomPass {
+    display: inline;
+    position: absolute;
+    height: 35px;
+    top: 75px;
+    font-size: 20px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+
+/* TO DELETE */
+#signupin{
+    display: block;
+    height: 350px;
+}
+#vl{
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 7px;
+    height: 100%;
+    top: 0;
+    background-color: #7a7a7a;
+}
+#signintext {
+    position: absolute;
+    left: 75%;
+    transform: translate(-50%, 0%);
+    color: rgb(223, 223, 223);
+    font-size: 30;
+}
+#signuptext {
+    position: absolute;
+    left: 25%;
+    transform: translate(-50%, 0%);
+    color: rgb(223, 223, 223);
+    font-size: 30;
+    top: 0px
+}
+
+#signin_username {
+    position: absolute;
+    height: 40px;
+    width: 235px;
+    font-size: 20px;
+    left: 75%;
+    transform: translate(-50%, 0%);
+    top: 100px
+}
+
+#signin_password {
+    position: absolute;
+    height: 40px;
+    width: 235px;
+    font-size: 20px;
+    left: 75%;
+    transform: translate(-50%, 0%);
+    top: 180px
+}
+
+#signup_username {
+    position: absolute;
+    height: 40px;
+    width: 235px;
+    font-size: 20px;
+    left: 25%;
+    transform: translate(-50%, 0%);
+    top: 100px
+}
+
+#signup_password {
+    position: absolute;
+    height: 40px;
+    width: 235px;
+    font-size: 20px;
+    left: 25%;
+    transform: translate(-50%, 0%);
+    top: 180px
+}
+
+#signupbutton { 
+    position: absolute;
+    left: 25%;
+    transform: translate(-50%, 0%);
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #4DB85C;
+    border-radius: 25px;
+    bottom: 20px;
+}
+#signinbutton {
+    position: absolute;
+    left: 75%;
+    transform: translate(-50%, 0%);
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #7a7a7a;
+    border-radius: 25px;
+    bottom: 20px;
+    
+}
+
+
+#remember {
+    visibility: hidden;
+    display: block;
+    height: 0;
+    width: 0;
+    position: absolute;
+    overflow: hidden;
+}
+
+#silable{
+    position: absolute;
+    left: 135px;
+    top: calc(51% - 17px);
+    font-size: 23px;
+    color: rgb(199, 199, 199);
+}
+
+#basesi {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    left: 70px;
+    top: 51%;
+    display: inline-block;
+    background-color: rgb(107, 107, 107);
+    border-radius: 35px;
+}
+
+#remeber:checked~#notbasesi{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: 75px;
+    top: calc(51% + 5px);
+    background-color: rgb(58, 58, 58);
+    border-radius: 35px;
+}
+
+#notbasesi{
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    left: 70px;
+    top: 51%;
+    background-color: rgb(107, 107, 107);
+    border-radius: 35px;
+}
+
+#usersettings_logout{
+    width: 130px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #C75C5C;
+    border-radius: 25px;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#usersettings_username {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    color: rgb(199, 199, 199);
+    text-align: center;
+    font-size: 40;
+}
+
+#nickname {
+    position: absolute;
+    height:35px;
+    width: 200px;
+    font-size: 30;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 85px;
+}
+
+#usersettings_setnick {
+    width: 180px;
+    height: 45px;
+    color: rgb(223, 223, 223);
+    background-color: #5fc75c;
+    border-radius: 25px;
+    position: absolute; 
+    top: 140px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#usersettingsfile{
+    display: none;
+}
+#usersettingsfilestyle{
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 40px;
+    background-color:#7a7a7a;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 200px;
+}
+
+#usersettings_pfp{
+    width: 100%; 
+    height: 100%;
+    border-radius: 40px;
+
+}
+
+#usersettings_nickname{
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    color: rgb(155, 155, 155);
+    text-align: center;
+    font-size: 20;
+}
+
+
+
+#userview {
+    width: 200px;
+    height: 300px;
+}
+
+#userview_username {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    color: rgb(199, 199, 199);
+    text-align: center;
+    font-size: 40;
+}
+
+#userview_nickname {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    color: rgb(155, 155, 155);
+    text-align: center;
+    font-size: 20;
+}
+
+#userview_pfp {
+    position: absolute;
+    bottom: 40px;
+    width: 150px;
+    height: 150px;
+    border-radius: 40px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+
+}
+
+.gifembed {
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 350;
+    height: auto;
+}
+
+#chatcover {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    top: calc(100vh - 80px);
+    left: 0px;
+    background-color:rgb(59, 59, 59);
+    border-radius: 0 0 50px 50px;
+}
+
+#chatcover2 {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    top: calc(100vh - 80px);
+    left: 0px;
+    background-color: rgb(112, 112, 112);
+}
+
+#error {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    top: -12px;
+}
+
+#errorbg {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    top: -16px;
+    background-color: #C75C5C;
+    width: 400px;
+    height: 30px;
+    border-radius: 15px 15px 0 0;
+}
+
+#overlay {
+    display: inline;
+}
+
+.ad {
+    position: absolute;
+    bottom: 10px; 
+    width: 180px; 
+    height: 40px; 
+    color: #000000; 
+    text-decoration: none;
+    background-color: rgb(107, 107, 107);
+    box-shadow: 0px 2px 6px 2px rgb(29, 29, 29);
+    border-radius: 100px;
+    text-align: center;
+    color: azure;
+}

@@ -1,0 +1,216 @@
+<html lang="en">
+<head>
+    <style>
+        body {
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport'/>
+
+    <link rel="icon" type="image/x-icon" href="/speech-bubble.png">
+    <link rel="stylesheet" href="client/index.css">
+    <link rel="stylesheet" href="client/mobile_index.css">
+    <meta name="description" content="Chat website I made as a little project for myself">
+    <title>BroHouse Chatting</title>
+</head>
+<body id="body">
+    
+    <div id="usersettings" class="window"> 
+        <p id="usersettings_username">Not Logged In</p>
+        <p id="usersettings_nickname">No Nickname</p>
+        <input type="text" name="Nickname" id="nickname" placeholder="Nickname" maxlength="9" class="input">
+        
+        <label for="usersettingsfile" >
+            <div id="usersettingsfilestyle">
+                <img src="https://chat.brohouse.dev/usr/image/Owl.png" alt="ttps://chat.brohouse.dev/usr/image/Owl.png" id="usersettings_pfp">
+            </div>
+        </label>
+        <input type="file" name="" id="usersettingsfile" onchange="usersettings()">
+        <div>
+            <button onclick="nickname()" id="usersettings_setnick">Set Nickname</button>
+        </div>
+        <div>
+            <button onclick="logout()" id="usersettings_logout">Log out</button>
+        </div>
+    </div>
+
+    <div id="userview" class="window">
+        <p id="userview_username">Username</p>
+        <p id="userview_nickname">Nickanme</p>
+        <div > 
+            <img src="https://brohouse.dev/usr/image/usr default.png" alt="" id="userview_pfp">
+        </div>
+    </div>
+
+    <div id="joinRoom" class="window">
+        <p style="color: rgb(180, 180, 180);" id="joinRoomText">Would you like to join room </p>
+        <input type="password" name="pass" id="joinRoomPass" placeholder="Password" class="input">
+        <div>
+            <button onclick="" id="joinRoomJoin">Join</button>
+        </div>
+        <div>
+            <button style="" onclick="clickCancelNewRoom()" id="joinRoomCancel">Cancel</button>
+        </div>
+    </div>
+
+    <div class="window" id="signupin">
+
+        <p id="signintext">SIGN IN</p>
+        <div>
+            <input type="text" autocomplete="off" name="" id="signin_username" placeholder="Username" class="input">
+        </div>
+        <div>
+            <input type="password" name="" id="signin_password" placeholder="Password" class="input">
+        </div>
+        <label id="silabel" style="display: none;">
+            <input type="checkbox" name="" id="remember">
+            <label for="remember">Remember your login?</label>
+            <span id="basesi"></span>
+            <span id="notbasesi"></span>
+        </label>
+        <button  onclick="onSignIn()" id="signinbutton">Sign In</button>
+        <div id="vl"></div>
+        <p id="signuptext">SIGN UP</p>
+        <div>
+            <input type="text" name="" autocomplete="off" id="signup_username" placeholder="Username" maxlength="9" class="input" >
+        </div>
+        <div>
+            <input type="password" name="" id="signup_password" placeholder="Password" maxlength="16"  class="input">
+        </div>
+        <button  onclick="onSignUp()" id="signupbutton">Sign Up</button>
+        <div id="errorbg">        <p id="error">Example Error Message
+        </p></div>
+
+
+
+    </div>
+
+    <div id="createRoomWindow" class="window">
+        <!-- 
+        name
+        maxPeople
+        lock
+        password
+        id
+        -->
+        <div>        
+            <input type="text" name="" id="createRoomWindow_Name" placeholder="TITLE OF ROOM" maxlength="10" class="input">
+        </div> 
+        <div>        
+            <input type="text" name="" id="createRoomWindow_Id" placeholder="ID OF ROOM" class="input">
+            <div class="question" id="idquestion">
+                <p class="questionmark">?</p>
+                <div>
+                    <div class="questionresponsetext">
+                        <p class="qsrtt">This field is required and the ID must be a unique ID. Although the title can match another this ID must not.</p>
+                    </div>
+                </div>
+            </div>
+        </div>               
+        <div>        
+            <input type="number" name="" id="createRoomWindow_MaxPeople" placeholder="Max People" max="99" min="1" class="input" value="5">
+            <div id="buttons">
+                <button id="createRoomWindow_MaxPeople_buttonup" onclick="document.getElementById('createRoomWindow_MaxPeople').value = Number(document.getElementById('createRoomWindow_MaxPeople').value) + 1">
+                    <p>+</p>
+                </button>
+                <button id="createRoomWindow_MaxPeople_buttondown" onclick="document.getElementById('createRoomWindow_MaxPeople').value = Number(document.getElementById('createRoomWindow_MaxPeople').value) - 1">
+                    <p>–</p>
+                </button>
+                <span id="line"></span>
+
+            </div>
+        </div>        
+        <div style="font-size: 15;"> 
+            <label id="createRoomWindow_Locked_label">
+                <input type="checkbox" name="" id="createRoomWindow_Locked" placeholder="Name" value="on"> 
+                <p id="createRoomWindow_Locked_privateLabel">Private</p>
+                <span id="base"></span>
+                <span id="notbase"></span>
+            </label>     
+        </div>        
+        <div>        
+            <input type="text" name="" id="createRoomWindow_Pass" placeholder="PASSWORD" class="input">
+        </div>
+        <div>
+            <button style="" onclick="submitNewRoom()" id="createRoomWindow_Create"> Create </button>
+        </div>
+        <div>
+            <button style="" onclick="clickCancelNewRoom()" id="createRoomWindow_Pass_Cancel">Cancel</button>
+        </div>
+
+    </div>
+    <button id="overlay" onclick="clickCancelNewRoom()"></button>
+        <div id="leftcolumn">
+            <div id="users">
+            </div>
+            <div>
+                <a href="/games" class="ad">
+                    <p style="font-size: 14px;">My Games!</p>
+                </a>
+            </div>
+        </div>
+
+        <div id="centercolumn">
+            <div id="chatContainerConatinerr">
+                <div id="chatContainer"></div>
+            </div>
+            <div id="chatcover2">
+            </div>
+            <div id="chatcover">
+            </div>
+
+            <div id="chatboxD">
+                <input type="text" name="Chat box" id="chatbox" class="chat" maxlength="1500">
+                <button onclick="onclicks()" class="chat" id="chatbutton" style="display: none;">Send</button>
+
+                <script>
+                    var input = document.getElementById("chatbox");
+                    input.addEventListener("keydown", function(event) {
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                            document.getElementById("chatbutton").click();
+                        }
+                    });
+                </script>
+            </div>
+            <div id="roomide">
+                <p id="roomidetext">Global</p>
+                <p id="roomideid">global</p>
+            </div>
+        </div>
+        <div id="rightcolumn">
+            <div id="rooms">
+                <button id="Global" class="room">
+                    <p class="roomname">Global</p>
+                </button>
+                <button id="createRoom" class="add" onclick="clickNewRoom()">
+                    <b>+</b>
+                </button>
+            </div>
+
+            <button id="self" onclick="userSettings()">
+                <p id="selfsettings">User Settings</p>
+                <div id="imgdiv">
+                    <img src="client/owl.png" alt="user" class="userimg"> </img>
+                </div>
+            </button>
+        </div>
+
+        <button style="display: none;" id="left_button" onclick="roomsbutton()"></button>
+
+
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client/mindex.js">connect()</script>
+<script src="client/mobile_index.js"></script>
+
+<script>
+    connect()
+</script>
+</html>
